@@ -2,15 +2,111 @@
 
 @import "tailwindcss";
 
-*{
+:root {
+  --color-primary: #4fbf8b;
+  --color-primary-dull: #44ae7c;
+  --color-secondary: #FF6B6B;
+  --color-accent: #4A90E2;
+  --color-accent-light: #6BA4E7;
+  --color-warning: #FFA726;
+  --color-success: #66BB6A;
+  --color-info: #29B6F6;
+}
+
+* {
   font-family: "Outfit", sans-serif;
 }
 
-@theme {
-  --color-primary: #4fbf8b;
-  --color-primary-dull: #44ae7c;
+.gradient-bg {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
 }
 
-.no-scrollbar::-webkit-scrollbar{
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Add colorful selection */
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add animated background */
+.animated-bg {
+  background: linear-gradient(-45deg, #4fbf8b, #4A90E2, #FF6B6B, #FFA726);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Hide scrollbar while maintaining scroll functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari and Opera */
 }

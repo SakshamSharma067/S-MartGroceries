@@ -20,10 +20,10 @@ import box_icon from "./box_icon.svg";
 import trust_icon from "./trust_icon.svg";
 import black_arrow_icon from "./black_arrow_icon.svg";
 import white_arrow_icon from "./white_arrow_icon.svg";
-import main_banner_bg from "./main_banner_bg.png";
+import main_banner_bg from "./main_banner_bg.jpg";
 import main_banner_bg_sm from "./main_banner_bg_sm.png";
-import bottom_banner_image from "./bottom_banner_image.png";
-import bottom_banner_image_sm from "./bottom_banner_image_sm.png";
+import bottom_banner_image from "./bottom_banner_image.jpg";
+import bottom_banner_image_sm from "./bottom_banner_image_sm.jpg";
 import add_address_iamge from "./add_address_image.svg";
 import organic_vegitable_image from "./organic_vegitable_image.png";
 import fresh_fruits_image from "./fresh_fruits_image.png";
@@ -70,6 +70,13 @@ import quinoa_image from "./quinoa_image.png";
 import brown_rice_image from "./brown_rice_image.png";
 import barley_image from "./barley_image.png";
 import backgroundimg from "./backgroundimg.png";
+import heart_icon from "./heart_icon.svg";
+import heart_filled_icon from "./heart_filled_icon.png";
+import empty_wishlist from "./empty-wishlist.png";
+import location_icon from "./location_icon.png";
+import phone_icon from "./phone_icon.jpg";
+import email_icon from "./email_icon.png";
+import clock_icon from "./clock_icon.png";
 
 export const assets = {
   logo,
@@ -99,7 +106,14 @@ export const assets = {
   bottom_banner_image_sm,
   add_address_iamge,
   box_icon,
-  backgroundimg
+  backgroundimg,
+  heart_icon,
+  heart_filled_icon,
+  empty_wishlist,
+  location_icon,
+  phone_icon,
+  email_icon,
+  clock_icon
 };
 
 export const categories = [
@@ -341,7 +355,6 @@ export const dummyProducts = [
     _id: "ek54j45k",
     name: "Mango 1 kg",
     category: "Fruits",
-
     price: 150,
     offerPrice: 140,
     image: [mango_image_1],
@@ -705,7 +718,6 @@ export const dummyProducts = [
     _id: "in01f25u",
     name: "Maggi Noodles 280g",
     category: "Instant",
-
     price: 55,
     offerPrice: 50,
     image: [maggi_image],

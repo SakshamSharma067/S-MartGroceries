@@ -18,7 +18,10 @@ export const AppContextProvider = ({ children }) => {
     const [isSeller, setIsSeller] = useState(false)
     const [showUserLogin, setShowUserLogin] = useState(false)
     const [products, setProducts] = useState([])
-
+    const [wishlistItems, setWishlistItems] = useState(() => {
+        const savedWishlist = localStorage.getItem('wishlist');
+        return savedWishlist ? JSON.parse(savedWishlist) : {};
+    })
     const [cartItems, setCartItems] = useState({})
     const [searchQuery, setSearchQuery] = useState({})
 
@@ -36,20 +39,101 @@ export const AppContextProvider = ({ children }) => {
         }
     }
 
-    // Fetch User Auth Status , User Data and Cart Items
+    // Fetch User Auth Status, User Data and Cart Items
     const fetchUser = async () => {
         try {
             const { data } = await axios.get('api/user/is-auth');
             if (data.success) {
                 setUser(data.user)
                 setCartItems(data.user.cartItems)
+                // Fetch wishlist from server if user is logged in
+                fetchWishlist()
+            } else {
+                // Load wishlist from localStorage if not logged in
+                const savedWishlist = localStorage.getItem('wishlist');
+                if (savedWishlist) {
+                    setWishlistItems(JSON.parse(savedWishlist));
+                }
             }
         } catch (error) {
             setUser(null)
+            // Load wishlist from localStorage on error
+            const savedWishlist = localStorage.getItem('wishlist');
+            if (savedWishlist) {
+                setWishlistItems(JSON.parse(savedWishlist));
+            }
         }
     }
 
+    // Fetch wishlist from server
+    const fetchWishlist = async () => {
+        try {
+            const { data } = await axios.get('/api/wishlist/get');
+            if (data.success) {
+                const wishlistObj = {};
+                data.wishlist.forEach(product => {
+                    wishlistObj[product._id] = 1;
+                });
+                setWishlistItems(wishlistObj);
+                // Save to localStorage
+                localStorage.setItem('wishlist', JSON.stringify(wishlistObj));
+            }
+        } catch (error) {
+            console.error("Failed to fetch wishlist:", error);
+            // Load from localStorage on error
+            const savedWishlist = localStorage.getItem('wishlist');
+            if (savedWishlist) {
+                setWishlistItems(JSON.parse(savedWishlist));
+            }
+        }
+    }
 
+    const toggleWishlist = async (productId) => {
+        try {
+            if (!user) {
+                // Handle wishlist locally if user is not logged in
+                const newWishlist = { ...wishlistItems };
+                if (newWishlist[productId]) {
+                    delete newWishlist[productId];
+                    toast.success("Removed from wishlist");
+                } else {
+                    newWishlist[productId] = 1;
+                    toast.success("Added to wishlist");
+                }
+                setWishlistItems(newWishlist);
+                localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+                return;
+            }
+
+            const { data } = await axios.post('/api/wishlist/toggle', { productId });
+            
+            if (data.success) {
+                const newWishlist = { ...wishlistItems }
+                if (data.inWishlist) {
+                    newWishlist[productId] = 1
+                    toast.success("Added to wishlist")
+                } else {
+                    delete newWishlist[productId]
+                    toast.success("Removed from wishlist")
+                }
+                setWishlistItems(newWishlist)
+                localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error("Failed to update wishlist")
+        }
+    }
+
+    // Save wishlist to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+    }, [wishlistItems]);
+
+    const getWishlistCount = () => {
+        return Object.keys(wishlistItems).length
+    }
 
     // Fetch All Products
     const fetchProducts = async () => {
@@ -120,7 +204,6 @@ export const AppContextProvider = ({ children }) => {
         return Math.floor(totalAmount * 100) / 100;
     }
 
-
     useEffect(() => {
         fetchUser()
         fetchSeller()
@@ -147,7 +230,8 @@ export const AppContextProvider = ({ children }) => {
 
     const value = {
         navigate, user, setUser, setIsSeller, isSeller,
-        showUserLogin, setShowUserLogin, products, currency, addToCart, updateCartItem, removeFromCart, cartItems, searchQuery, setSearchQuery, getCartAmount, getCartCount, axios, fetchProducts, setCartItems
+        showUserLogin, setShowUserLogin, products, currency, addToCart, updateCartItem, removeFromCart, cartItems, searchQuery, setSearchQuery, getCartAmount, getCartCount, axios, fetchProducts, setCartItems,
+        wishlistItems, toggleWishlist, getWishlistCount
     }
 
     return <AppContext.Provider value={value}>
