@@ -93,7 +93,7 @@ const AddAddress = () => {
 
                 <InputField handleChange={handleChange} address={address} name='phone' type="text" placeholder="Phone" />
 
-                <button className='w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase'>
+                <button className='w-full mt-6 bg-green-300 text-black py-3 hover:bg-primary-dull transition cursor-pointer uppercase'>
                     Save address
                 </button>
 

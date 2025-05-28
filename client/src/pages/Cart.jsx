@@ -22,6 +22,9 @@ const Cart = () => {
     }
 
     const getUserAddress = async ()=>{
+        if(!user){
+            return toast.error("Please login to continue")
+        }
         try {
             const {data} = await axios.get('/api/address/get');
             if (data.success){
@@ -152,7 +155,7 @@ const Cart = () => {
                         <button onClick={() => setShowAddress(!showAddress)} className="text-primary hover:underline cursor-pointer">
                             Change
                         </button>
-                        {showAddress && (
+                        {showAddress && user ?(
                             <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full">
                                {addresses.map((address, index)=>(
                                 <p onClick={() => {setSelectedAddress(address); setShowAddress(false)}} className="text-gray-500 p-2 hover:bg-gray-100">
@@ -162,6 +165,12 @@ const Cart = () => {
                                 <p onClick={() => navigate("/add-address")} className="text-primary text-center cursor-pointer p-2 hover:bg-primary/10">
                                     Add address
                                 </p>
+                            </div>
+                        ): showAddress && (
+                            <div className="absolute top-12 py-3 bg-white border border-gray-300 text-sm w-full shadow-md">
+                                <div className="flex flex-col items-center gap-2 px-4">
+                                    <p className="text-gray-600">Please login to add or select delivery address</p>
+                                </div>
                             </div>
                         )}
                     </div>
