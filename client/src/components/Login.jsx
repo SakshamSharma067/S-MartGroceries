@@ -115,7 +115,7 @@ const Login = () => {
 
                         <button 
                             type="submit"
-                            className="w-full py-2.5 bg-green-300 text-black text-sm font-medium rounded-lg hover:bg-primary-dull transition-colors cursor-pointer"
+                            className="w-full py-2.5 bg-green-300 text-black text-sm font-medium rounded-lg hover:bg-green-400 transition-colors cursor-pointer"
                         >
                             {state === "register" ? "Create Account" : "Login"}
                         </button>
