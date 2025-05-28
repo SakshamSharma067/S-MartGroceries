@@ -45,7 +45,7 @@ const Login = () => {
                     <div className="flex gap-2 p-1 bg-gray-100 rounded-lg mb-8">
                         <button 
                             onClick={()=> setState("login")}
-                            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
+                            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer ${
                                 state === "login" 
                                     ? "bg-white text-gray-900 shadow-sm" 
                                     : "text-gray-500 hover:text-gray-900"
@@ -55,7 +55,7 @@ const Login = () => {
                         </button>
                         <button 
                             onClick={()=> setState("register")}
-                            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors ${
+                            className={`flex-1 py-2 text-sm font-medium rounded-md transition-colors cursor-pointer ${
                                 state === "register" 
                                     ? "bg-white text-gray-900 shadow-sm" 
                                     : "text-gray-500 hover:text-gray-900"
@@ -115,7 +115,7 @@ const Login = () => {
 
                         <button 
                             type="submit"
-                            className="w-full py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dull transition-colors"
+                            className="w-full py-2.5 bg-green-300 text-black text-sm font-medium rounded-lg hover:bg-primary-dull transition-colors cursor-pointer"
                         >
                             {state === "register" ? "Create Account" : "Login"}
                         </button>
@@ -127,7 +127,7 @@ const Login = () => {
                         {state === "register" ? "Already have an account?" : "Don't have an account?"}{" "}
                         <button 
                             onClick={() => setState(state === "register" ? "login" : "register")}
-                            className="text-primary font-medium hover:underline"
+                            className="text-black font-medium hover:underline cursor-pointer"
                         >
                             {state === "register" ? "Login" : "Register"}
                         </button>
