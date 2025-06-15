@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 
 const Navbar = () => {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
     const {user, setUser, setShowUserLogin, navigate, setSearchQuery, searchQuery, getCartCount, getWishlistCount, axios} = useAppContext();
 
     const logout = async ()=>{
